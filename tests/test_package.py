@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from typing_extensions import Protocol, runtime_checkable
+
 import epyllion as m
-from epyllion._compat.typing import Protocol, runtime_checkable
 
 
 def test_version():

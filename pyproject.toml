@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "epyllion"
-version = "0.1.0"
 authors = [
   { name = "Thomas Reiter", email = "peregrinus@planet.ms" },
 ]
+dynamic = ["version"]
 description = "Literate Peogramming based on Markdown"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.10"
 classifiers = [
   "Development Status :: 1 - Planning",
   "Intended Audience :: Science/Research",
@@ -58,6 +58,10 @@ Homepage = "https://github.com/tom65536/epyllion"
 Discussions = "https://github.com/tom65536/epyllion/discussions"
 Changelog = "https://github.com/tom65536/epyllion/releases"
 
+[project.scripts]
+epyllion = "epyllion.__main__:main"
+[tool.setuptools.dynamic]
+version = {attr = "epyllion.__version__"}
 
 [tool.pytest.ini_options]
 minversion = "6.0"
