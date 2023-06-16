@@ -1,10 +1,14 @@
+from __future__ import annotations
+
+from click import echo
 
 
 def main() -> None:
     """
     Wraps the main program.
     """
-    print("hello world")
+    echo("hello world")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

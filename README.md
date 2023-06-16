@@ -18,7 +18,7 @@
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
 [github-discussions-link]:  https://github.com/tom65536/epyllion/discussions
 [gitter-badge]:             https://badges.gitter.im/https://github.com/tom65536/epyllion/community.svg
-[gitter-link]:              https://gitter.im/https://github.com/tom65536/epyllion/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge
+[gitter-link]: https://matrix.to/#/#epyllion:gitter.im
 [pypi-link]:                https://pypi.org/project/epyllion/
 [pypi-platforms]:           https://img.shields.io/pypi/pyversions/epyllion
 [pypi-version]:             https://img.shields.io/pypi/v/epyllion

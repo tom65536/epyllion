@@ -8,7 +8,11 @@ name = "epyllion"
 authors = [
   { name = "Thomas Reiter", email = "peregrinus@planet.ms" },
 ]
-dynamic = ["version"]
+dynamic = [
+  "version",
+  "dependencies",
+  "optional-dependencies"
+]
 description = "Literate Peogramming based on Markdown"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -31,27 +35,6 @@ classifiers = [
   "Typing :: Typed",
 ]
 
-dependencies=[
-   "mistune==3.0.1"
-]
-
-[project.optional-dependencies]
-test = [
-  "pytest >=6",
-  "pytest-cov >=3",
-]
-dev = [
-  "pytest >=6",
-  "pytest-cov >=3",
-]
-docs = [
-  "sphinx>=4.0",
-  "myst_parser>=0.13",
-  "sphinx-book-theme>=0.1.0",
-  "sphinx_copybutton",
-  "furo",
-]
-
 [project.urls]
 Homepage = "https://github.com/tom65536/epyllion"
 "Bug Tracker" = "https://github.com/tom65536/epyllion/issues"
@@ -62,6 +45,22 @@ Changelog = "https://github.com/tom65536/epyllion/releases"
 epyllion = "epyllion.__main__:main"
 [tool.setuptools.dynamic]
 version = {attr = "epyllion.__version__"}
+
+
+[tool.setuptools.dynamic.dependencies]
+file = ["requirements.txt"]
+
+[tool.setuptools.dynamic.optional-dependencies.dev]
+file = ["dev-requirements.txt"]
+
+[tool.setuptools.dynamic.optional-dependencies.test]
+file = ["test-requirements.txt"]
+
+[tool.setuptools.dynamic.optional-dependencies.docs]
+file = ["docs-requirements.txt"]
+
+[tool.setuptools.dynamic.optional-dependencies.mypy]
+file = ["mypy-requirements.txt"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -132,7 +131,6 @@ extend-ignore = [
   "PLR",    # Design related pylint codes
   "E501",   # Line too long
 ]
-target-version = "py37"
 typing-modules = ["epyllion._compat.typing"]
 src = ["src"]
 unfixable = [
@@ -149,7 +147,7 @@ isort.required-imports = ["from __future__ import annotations"]
 
 
 [tool.pylint]
-py-version = "3.7"
+py-version = "3.10"
 ignore-paths= ["src/epyllion/_version.py"]
 reports.output-format = "colorized"
 similarities.ignore-imports = "yes"

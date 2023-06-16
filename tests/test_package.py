@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing_extensions import Protocol, runtime_checkable
+from typing import Protocol, runtime_checkable
 
 import epyllion as m
 

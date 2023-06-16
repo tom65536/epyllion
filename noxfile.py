@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import glob
 import shutil
 from pathlib import Path
 
@@ -90,3 +91,21 @@ def build(session: nox.Session) -> None:
 
     session.install("build")
     session.run("python", "-m", "build")
+
+
+@nox.session
+def requirements(session: nox.Session) -> None:
+    """
+    Refresh requirements files.
+    """
+    session.install("pip-tools")
+    for in_name in glob.glob("*requirements.in"):
+        out_name = in_name[:-2] + "txt"
+        session.run(
+            "pip-compile",
+            "--output-file",
+            out_name,
+            "--resolver",
+            "backtracking",
+            *{"requirements.in", in_name},
+        )
