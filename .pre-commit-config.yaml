@@ -3,6 +3,54 @@ ci:
   autofix_commit_msg: "style: pre-commit fixes"
 
 repos:
+  - repo: https://github.com/jazzband/pip-tools
+    rev: 6.13.0
+    hooks:
+      - id: pip-compile
+        name: pip-compile requirements.txt
+        args:
+          [
+            --resolver=backtracking,
+            --output-file=requirements/requirements.txt,
+            requirements/requirements.in,
+          ]
+        files: ^requirements/requirements\.(in|txt)$
+      - id: pip-compile
+        name: pip-compile requirements/dev.in
+        args:
+          [
+            --resolver=backtracking,
+            --output-file=requirements/dev.txt,
+            requirements/dev.in,
+          ]
+        files: ^requirements/dev\.(in|txt)$
+      - id: pip-compile
+        name: pip-compile requirements/test.in
+        args:
+          [
+            --resolver=backtracking,
+            --output-file=requirements/test.txt,
+            requirements/test.in,
+          ]
+        files: ^requirements/test\.(in|txt)$
+      - id: pip-compile
+        name: pip-compile requirements/docs.in
+        args:
+          [
+            --resolver=backtracking,
+            --output-file=requirements/docs.txt,
+            requirements/docs.in,
+          ]
+        files: ^requirements/docs\.(in|txt)$
+      - id: pip-compile
+        name: pip-compile requirements/types.in
+        args:
+          [
+            --resolver=backtracking,
+            --output-file=requirements/types.txt,
+            requirements/types.in,
+          ]
+        files: ^requirements/types\.(in|txt)$
   - repo: https://github.com/psf/black
     rev: "23.3.0"
     hooks:

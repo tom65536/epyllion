@@ -48,19 +48,19 @@ version = {attr = "epyllion.__version__"}
 
 
 [tool.setuptools.dynamic.dependencies]
-file = ["requirements.txt"]
+file = ["requirements/requirements.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies.dev]
-file = ["dev-requirements.txt"]
+file = ["requirements/dev.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies.test]
-file = ["test-requirements.txt"]
+file = ["requirements/test.txt"]
 
 [tool.setuptools.dynamic.optional-dependencies.docs]
-file = ["docs-requirements.txt"]
+file = ["requirements/docs.txt"]
 
-[tool.setuptools.dynamic.optional-dependencies.mypy]
-file = ["mypy-requirements.txt"]
+[tool.setuptools.dynamic.optional-dependencies.types]
+file = ["requirements/types.txt"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"

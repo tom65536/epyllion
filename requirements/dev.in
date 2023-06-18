@@ -1,0 +1,5 @@
+-c requirements.txt
+nox
+pre-commit
+pytest>=6
+pytest-cov>=3
