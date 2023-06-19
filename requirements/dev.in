@@ -1,5 +1,8 @@
 -c requirements.txt
+tox>=4
 nox
 pre-commit
-pytest>=6
-pytest-cov>=3
+pip-compile-multi
+bump2version
+towncrier
+black
