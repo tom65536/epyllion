@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import glob
 import shutil
 from pathlib import Path
 
@@ -19,26 +18,6 @@ def lint(session: nox.Session) -> None:
     """
     session.install("pre-commit")
     session.run("pre-commit", "run", "--all-files", *session.posargs)
-
-
-@nox.session
-def pylint(session: nox.Session) -> None:
-    """
-    Run PyLint.
-    """
-    # This needs to be installed into the package environment, and is slower
-    # than a pre-commit check
-    session.install(".", "pylint")
-    session.run("pylint", "src", *session.posargs)
-
-
-@nox.session
-def tests(session: nox.Session) -> None:
-    """
-    Run the unit and regular tests. Use --cov to activate coverage.
-    """
-    session.install(".[test]")
-    session.run("pytest", *session.posargs)
 
 
 @nox.session
@@ -91,21 +70,3 @@ def build(session: nox.Session) -> None:
 
     session.install("build")
     session.run("python", "-m", "build")
-
-
-@nox.session
-def requirements(session: nox.Session) -> None:
-    """
-    Refresh requirements files.
-    """
-    session.install("pip-tools")
-    for in_name in glob.glob("*requirements.in"):
-        out_name = in_name[:-2] + "txt"
-        session.run(
-            "pip-compile",
-            "--output-file",
-            out_name,
-            "--resolver",
-            "backtracking",
-            *{"requirements.in", in_name},
-        )
