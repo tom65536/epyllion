@@ -35,8 +35,8 @@ jobs:
           extra_args: --hook-stage manual --all-files
       - name: Run PyLint
         run: |
-          # echo "::add-matcher::$GITHUB_WORKSPACE/.github/matchers/pylint.json"
-          pipx run tox -s pylint
+          echo "::add-matcher::$GITHUB_WORKSPACE/.github/matchers/pylint.json"
+          pipx run tox -f pylint
 
   checks:
     name: Check Python ${{ matrix.python-version }} on ${{ matrix.runs-on }}
