@@ -35,7 +35,7 @@ jobs:
           extra_args: --hook-stage manual --all-files
       - name: Run PyLint
         run: |
-          echo "::add-matcher::$GITHUB_WORKSPACE/.github/matchers/pylint.json"
+          # echo "::add-matcher::$GITHUB_WORKSPACE/.github/matchers/pylint.json"
           pipx run tox -s pylint
 
   checks:
