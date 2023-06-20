@@ -13,6 +13,7 @@ on:
 
 jobs:
   check:
+    name: Run checks with tox
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
