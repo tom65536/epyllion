@@ -1,0 +1,76 @@
+name: package validation
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev*
+  pull_request:
+  release:
+    types:
+      - published
+
+jobs:
+  pre-commit-checks:
+    name: Run checks with pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - uses: pre-commit/action@v3.0.0
+        with:
+          extra_args: --hook-stage manual --all-files
+
+  tox-checks:
+    name: Run checks with tox
+    runs-on: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # https://help.github.com/articles/virtual-environments-for-github-actions
+        platform:
+          - ubuntu-latest # ubuntu-20.04
+          - macos-latest # macOS-11
+          - windows-latest # windows-2022
+        python-version: ["3.10", "3.11", 3.12-dev]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade setuptools pip wheel
+          python -m pip install tox-gh-actions
+      - name: Install matcher
+        if:
+          ${{ matrix.platform == 'ubuntu-latest' && matrix.python-version ==
+          '3.11' }}
+        run: |
+          echo "::add-matcher::$GITHUB_WORKSPACE/.github/matchers/pylint.json"
+      - name: Test with tox
+        run: |
+          tox
+      - name: Upload coverage.xml
+        if:
+          ${{ matrix.platform == 'ubuntu-latest' && matrix.python-version ==
+          '3.11' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: tox-gh-actions-coverage
+          path: coverage.xml
+          if-no-files-found: error
+      - name: Upload coverage.xml to codecov
+        if:
+          ${{ matrix.platform == 'ubuntu-latest' && matrix.python-version ==
+          '3.11' }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
