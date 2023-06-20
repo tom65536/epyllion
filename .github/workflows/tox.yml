@@ -57,3 +57,5 @@ jobs:
           ${{ matrix.platform == 'ubuntu-latest' && matrix.python-version ==
           '3.11' }}
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

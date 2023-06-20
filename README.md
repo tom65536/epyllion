@@ -17,7 +17,7 @@
 [conda-link]:               https://github.com/conda-forge/epyllion-feedstock
 [github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
 [github-discussions-link]:  https://github.com/tom65536/epyllion/discussions
-[gitter-badge]:             https://badges.gitter.im/https://github.com/tom65536/epyllion/community.svg
+[gitter-badge]:             https://badges.gitter.im/Join%20Chat.svg
 [gitter-link]: https://matrix.to/#/#epyllion:gitter.im
 [pypi-link]:                https://pypi.org/project/epyllion/
 [pypi-platforms]:           https://img.shields.io/pypi/pyversions/epyllion
