@@ -43,6 +43,7 @@ Changelog = "https://github.com/tom65536/epyllion/releases"
 
 [project.scripts]
 epyllion = "epyllion.__main__:main"
+
 [tool.setuptools.dynamic]
 version = {attr = "epyllion.__version__"}
 

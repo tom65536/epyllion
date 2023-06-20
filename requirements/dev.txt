@@ -92,7 +92,7 @@ toposort==1.10
     # via pip-compile-multi
 towncrier==23.6.0
     # via -r requirements/dev.in
-tox==4.6.2
+tox==4.6.3
     # via -r requirements/dev.in
 virtualenv==20.23.1
     # via
