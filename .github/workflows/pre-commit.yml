@@ -1,0 +1,16 @@
+name: pre-commit-checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev*
+  pull_request:
+  release:
+    types:
+      - published
+
+jobs:
+  check:
+    runs-on: ubuntu-latest

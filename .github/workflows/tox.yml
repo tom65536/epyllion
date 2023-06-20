@@ -1,4 +1,4 @@
-name: Tests
+name: tox-checks
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
       - published
 
 jobs:
-  build:
+  check:
     runs-on: ${{ matrix.platform }}
     strategy:
       fail-fast: false
