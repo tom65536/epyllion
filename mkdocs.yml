@@ -12,6 +12,6 @@ plugins:
             docstring_style: google
 markdown_extensions:
   - markdown_include.include:
-      base_path: .
+      base_path: docs
   - admonition
   - mkdocs-click
