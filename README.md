@@ -2,6 +2,7 @@
 
 [![Actions Status][actions-badge]][actions-link]
 [![Documentation Status][rtd-badge]][rtd-link]
+[![codecov](https://codecov.io/gh/tom65536/epyllion/branch/main/graph/badge.svg?token=1GVTHHNYPT)](https://codecov.io/gh/tom65536/epyllion)
 
 [![PyPI version][pypi-version]][pypi-link]
 [![Conda-Forge][conda-badge]][conda-link]
