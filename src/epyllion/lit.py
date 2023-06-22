@@ -7,12 +7,14 @@ from __future__ import annotations
 import logging
 import pathlib
 import shlex
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
+import click
 import mistune
 from mistune.core import BlockState
-from mistune.renderers.markdown import MarkdownRenderer
+from mistune.renderers.markdown import MarkdownRenderer, fenced_re
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,7 +25,7 @@ class LitContext:
     Context for the weave/tangle process
     """
 
-    dummy: int = 0
+    chunk_handler: Callable[[str], str] = id
 
 
 class LitRenderer(MarkdownRenderer):
@@ -46,9 +48,12 @@ class LitRenderer(MarkdownRenderer):
     def block_code(self, token: dict[str, Any], state: BlockState) -> str:
         attrs = token.get("attrs", {})
         info = attrs.get("info", "")
-        args = shlex.split(info)
+        try:
+            args = shlex.split(info)
+            chunk_cli.main(args, standalone_mode=False)
+        except Exception as ex:
+            pass
         result = super().block_code(token, state)
-        result += "\n" + repr(args) + "\n"
         return result
 
 
@@ -74,4 +79,47 @@ class Lit:
             out.write(mddoc)
 
 
-# We parse the extra info passed to fenced code blocks
+@click.group()
+@click.pass_context
+def chunk_cli(ctx) -> None:
+    """
+    Parse the extra info passed to fenced code blocks using click.
+    """
+
+
+@chunk_cli.command()
+@click.pass_context
+def python(ctx) -> None:
+    """
+    Process code chunk for language Python
+    """
+
+
+def _fence(info, code, marker) -> str:
+    if code and code[-1] != "\n":
+        code += "\n"
+
+    if not marker:
+        marker = _get_fenced_marker(code)
+    return marker + info + "\n" + code + marker + "\n\n"
+
+
+def _get_fenced_marker(code):
+    found = fenced_re.findall(code)
+    if not found:
+        return "```"
+
+    ticks = []  # `
+    waves = []  # ~
+    for s in found:
+        if s[0] == "`":
+            ticks.append(len(s))
+        else:
+            waves.append(len(s))
+
+    if not ticks:
+        return "```"
+
+    if not waves:
+        return "~~~"
+    return "`" * (max(ticks) + 1)
