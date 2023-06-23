@@ -11,22 +11,13 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-import click
 import mistune
 from mistune.core import BlockState
 from mistune.renderers.markdown import MarkdownRenderer, fenced_re
 
+from .context import LitContext
+
 LOGGER = logging.getLogger(__name__)
-
-
-@dataclass
-class LitContext:
-    """
-    Context for the weave/tangle process
-    """
-
-    chunk_handler: Callable[[str], str] = id
-
 
 class LitRenderer(MarkdownRenderer):
     """
@@ -50,7 +41,7 @@ class LitRenderer(MarkdownRenderer):
         info = attrs.get("info", "")
         try:
             args = shlex.split(info)
-            chunk_cli.main(args, standalone_mode=False)
+            chunks.main(args, standalone_mode=False)
         except Exception as ex:
             pass
         result = super().block_code(token, state)
@@ -78,21 +69,6 @@ class Lit:
             out.write("---\n")
             out.write(mddoc)
 
-
-@click.group()
-@click.pass_context
-def chunk_cli(ctx) -> None:
-    """
-    Parse the extra info passed to fenced code blocks using click.
-    """
-
-
-@chunk_cli.command()
-@click.pass_context
-def python(ctx) -> None:
-    """
-    Process code chunk for language Python
-    """
 
 
 def _fence(info, code, marker) -> str:
